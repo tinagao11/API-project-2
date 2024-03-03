@@ -217,7 +217,7 @@ return spot;
 
 }
 
-router.get('/:id',requireAuth, async(req, res)=>{
+router.get('/:spotId',requireAuth, async(req, res)=>{
   const { spotId } = req.params;
   const spotDetails = await getSpotDetailById(spotId);
 
@@ -229,7 +229,119 @@ router.get('/:id',requireAuth, async(req, res)=>{
 
 res.json(spotDetails);
 
+});
+
+//create a spot
+router.post('/',[requireAuth,valitSpots], async(req, res)=>{
+  const { address, city, state, country, lat, lng, name, description, price } = req.body
+
+  const spot = await Spot.create({
+    ownerId: req.user.id,
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
+})
+
+if (spot.lat) spot.lat = parseFloat(lat)
+if (spot.lng) spot.lng = parseFloat(lng)
+if (spot.price) spot.price = parseFloat(price)
+
+res.status(201).json(spot)
 
 })
+
+//Add an Image to a Spot based on the Spot's id
+async function addImageToSpot(userId, spotId, imageUrl, isPreview){
+  const spot = await Spot.findByPk(spotId);
+
+  if(!spot){
+    return { error: true, status: 404, message: "Spot couldn't be found" }
+  }
+
+  if(userId !== spot.ownerId){
+
+    return { error: true, status: 403, message:'Spot must belong to the current user'}
+
+  }
+
+  const spotImage = await SpotImage.create({
+    spotId: spotId,
+    url: imageUrl,
+    preview: isPreview
+  })
+
+  return {
+    error: false,
+    spotImage:{
+      id: spotImage.id,
+      url: spotImage.url,
+      preview: spotImage.preview
+    }
+  }
+
+}
+
+router.post('/:spotId/images', requireAuth, async(req, res)=>{
+  const {url, preview} = req.body;
+
+  const { spotId } = req.params;
+
+  const userId = req.user.id;
+
+  const result = await addImageToSpot(userId, spotId, url, preview)
+
+  if(result.error){
+    return res.status(result.status).json({message: result.message})
+  }
+
+  res.json(result.spotImage)
+})
+
+    // Edit a spot
+  router.put('/:spotId', [requireAuth, valitSpots], async(req, res)=>{
+    const {spotId} = req.params;
+
+    const data = req.body;
+
+    const spot = await Spot.findByPk(spotId)
+
+    if(!spot){
+      return res.status(404).json({message: `Spot couldn't be found`})}
+
+    if(req.user.id !== spot.ownerId){
+      return res.status(404).json({message: `Spot must belong to the current user`})
+    }
+
+    const updatedSpot = await spot.update(data)
+
+    res.json(updatedSpot)
+
+  })
+
+   //delete spot
+   router.delete('/:spotId', requireAuth, async(req, res)=>{
+    const { spotId } = req.params;
+    let spot = await Spot.findByPk(spotId);
+
+    if(!spot){
+      return res.status(404).json({message: `Spot couldn't be found`})}
+
+    if(req.user.id !== spot.ownerId){
+      return res.status(404).json({message: `Spot must belong to the current user`})
+    }
+
+    spot.destroy()
+
+    res.status(200).json({
+      message: 'Successfully deleted'
+    })
+
+   })
 
 module.exports = router;

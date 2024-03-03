@@ -48,7 +48,7 @@ module.exports = {
         price: 800.99
       },
       {
-        ownerId: 2, // Assuming similar ownerId for simplicity
+        ownerId: 2,
         address: '423 Main St',
         city: 'Dcity',
         state: 'Dstate',
