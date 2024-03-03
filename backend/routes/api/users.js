@@ -1,15 +1,13 @@
 // backend/routes/api/users.js
 const express = require('express')
-const router = express.Router();
-
 const bcrypt = require('bcryptjs');
-
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
-const spotsRouter = require('./spots.js');
+const { User } = require('../../db/models');
+
+const router = express.Router();
 
 const validateSignup = [
   check('email')

@@ -8,15 +8,15 @@ const { check,query } = require('express-validator');//package that collect erro
 
 const router = express.Router();
 
-const valitReviews = [
-  check('review')
-      .exists({ checkFalsy: true })
-      .withMessage("Review text is required"),
-  check('stars')
-      .isInt({ min: 1, max: 5 })
-      .withMessage("Stars must be an integer from 1 to 5"),
-  handleValidationErrors
-]
+// const valitReviews = [
+//   check('review')
+//       .exists({ checkFalsy: true })
+//       .withMessage("Review text is required"),
+//   check('stars')
+//       .isInt({ min: 1, max: 5 })
+//       .withMessage("Stars must be an integer from 1 to 5"),
+//   handleValidationErrors
+// ]
 const valitSpots = [
   check('address')
       .exists({ checkFalsy: true })
@@ -82,6 +82,64 @@ query('maxPrice')
   .withMessage("Maximum price must be greater than or equal to 0"),
 handleValidationErrors
 ]
+
+//get all spots
+router.get('/', validateQueryFilters, async (req, res)=>{
+  let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
+  let queryObj = {
+    where: {}
+  };
+
+  if(!page || (parseInt(page)==NaN)) page = 1;
+  if(!size || (parseInt(size)==NaN)) size = 20;
+
+  queryObj.limit = size;
+  queryObj.offset = size *(page-1);
+
+  if(minLat){
+    queryObj.where.lat = {
+      [Op.gte]: parseFloat(minLat)
+    }
+  }
+
+  if(maxLat){
+    queryObj.where.lat ={
+      [Op.gle]: parseFloat(maxLat)
+    }
+  }
+
+  if(minLng){
+    queryObj.where.lng = {
+      [Op.gte]: parseFloat(minLng)
+    }
+  }
+
+  if(maxLng){
+    queryObj.where.lng ={
+      [Op.gle]: parseFloat(maxLng)
+    }
+  }
+
+  if(minPrice){
+    queryObj.where.price = {
+      [Op.gte]: parseFloat(minPrice)
+    }
+  }
+
+  if(maxLat){
+    queryObj.where.price ={
+      [Op.gle]: parseFloat(maxPrice)
+    }
+  }
+
+  const spots = await Spot.findAll({...queryObj})
+
+  return res.status(200).json(spots)
+
+})
+
+
+
 //get spots by current user
 router.get('/current', requireAuth, async (req, res) => {
   const ownerId = req.user.id;
@@ -120,5 +178,58 @@ router.get('/current', requireAuth, async (req, res) => {
 });
 
 
+// Get details of a Spot from an id
+async function getSpotDetailById(spotId){
+  const spot = await Spot.findByPk(spotId);
+
+  if(!spot) return null;
+
+  const reviewCount= await Review.count({
+    where: {spotId}
+  })
+
+  const starSum = await Review.sum('stars',{
+    where:{spotId}
+  })
+
+  const avgRating = starSum/reviewCount
+
+  const imgurl = await SpotImage.findAll({
+    where: {spotId},
+    attributes: ['id', 'url', 'preview']
+  })
+
+  const owner = await User.findByPk(spot.ownerId,{
+    attributes: ['id', 'firstName','lastName']
+  })
+
+  spot.setDataValue('numReviews', reviewCount);
+  spot.setDataValue('avgStarRating', avgRating);
+  spot.setDataValue('SpotImages', imgurl);
+  spot.setDataValue('Owner', owner);
+
+
+  ['lat', 'lng', 'price'].forEach(key => {
+    if (spot[key]) spot[key] = parseFloat(spot[key]);
+});
+
+return spot;
+
+}
+
+router.get('/:id',requireAuth, async(req, res)=>{
+  const { spotId } = req.params;
+  const spotDetails = await getSpotDetailById(spotId);
+
+  if (!spotDetails) {
+    return res.status(404).json({
+        message: "Spot couldn't be found"
+    });
+}
+
+res.json(spotDetails);
+
+
+})
 
 module.exports = router;
