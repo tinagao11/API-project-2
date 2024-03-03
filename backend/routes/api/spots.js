@@ -144,13 +144,12 @@ router.get('/', validateQueryFilters, async (req, res)=>{
 router.get('/current', requireAuth, async (req, res) => {
   const ownerId = req.user.id;
 
-  // Fetch all spots owned by the current user
   const spots = await Spot.findAll({
       where: { ownerId: ownerId },
   });
 
   for (const spot of spots) {
-      // Calculate average rating for each spot
+
       const reviews = await Review.findAll({
           where: { spotId: spot.id },
           attributes: ['stars']
@@ -160,7 +159,7 @@ router.get('/current', requireAuth, async (req, res) => {
       avgRating = isNaN(avgRating) ? 0 : avgRating; // Handle case with no reviews
       spot.dataValues.avgRating = avgRating;
 
-      // Fetch preview image for each spot
+
       const previewImage = await SpotImage.findOne({
           where: { spotId: spot.id },
           attributes: ['url']
