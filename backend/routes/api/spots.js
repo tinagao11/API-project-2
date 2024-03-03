@@ -16,7 +16,7 @@ const validReviews = [
   check('stars')
       .isInt({ min: 1, max: 5 })
       .withMessage("Stars must be an integer from 1 to 5"),
-      
+
   handleValidationErrors
 ]
 
@@ -317,7 +317,7 @@ router.post('/:spotId/images', requireAuth, async(req, res)=>{
       return res.status(404).json({message: `Spot couldn't be found`})}
 
     if(req.user.id !== spot.ownerId){
-      return res.status(404).json({message: `Spot must belong to the current user`})
+      return res.status(403).json({message: `Spot must belong to the current user`})
     }
 
     const updatedSpot = await spot.update(data)
@@ -335,7 +335,7 @@ router.post('/:spotId/images', requireAuth, async(req, res)=>{
       return res.status(404).json({message: `Spot couldn't be found`})}
 
     if(req.user.id !== spot.ownerId){
-      return res.status(404).json({message: `Spot must belong to the current user`})
+      return res.status(403).json({message: `Spot must belong to the current user`})
     }
 
     spot.destroy()

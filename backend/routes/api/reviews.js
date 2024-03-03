@@ -74,7 +74,7 @@ router.post('/:reviewId/images', requireAuth, async(req, res)=>{
   }
 
   if(review.userId !== req.user.id){
-    return res.status(404).json({message: `Review must belong to the current user`})
+    return res.status(403).json({message: `Review must belong to the current user`})
   }
 
   const imageCount = await ReviewImage.findAll({
@@ -104,5 +104,54 @@ router.post('/:reviewId/images', requireAuth, async(req, res)=>{
 
 
 //Edit a Review
+
+router.put('/:reviewId', requireAuth, async (req, res)=>{
+  const {reviewId}= req.params;
+  const {review, stars}= req.body;
+
+  const currentreview = await Review.findByPk(reviewId);
+
+  if(!currentreview){
+    return res.status(404).json({"message": "Review couldn't be found"})
+  }
+
+  if(currentreview.userId !== req.user.id){
+    return res.status(403).json({message: `Review must belong to the current user`})
+  }
+
+  const updatedRview = await currentreview.update({review, stars})
+
+  return res.status(200).json(updatedRview)
+
+
+})
+
+
+
+//Delete a Review
+
+router.delete('/:reviewId', requireAuth, async(req,res)=>{
+  const {reviewId}= req.params;
+
+  const review = await Review.findByPk(reviewId);
+
+  if(!review){
+    return res.status(404).json({"message": "Review couldn't be found"})
+  }
+
+  if(review.userId !== req.user.id){
+    return res.status(403).json({message: `Review must belong to the current user`})
+  }
+
+  review.destroy();
+
+  res.status(200).json({
+    message: 'Successfully deleted'
+  })
+
+
+})
+
+
 
 module.exports = router;
