@@ -136,8 +136,58 @@ router.get('/', validateQueryFilters, async (req, res)=>{
   }
 
   const spots = await Spot.findAll({...queryObj})
+  let spotArr = []
+    for(let spot of spots){
+        const reviews = await Review.findAll({
+            where: {
+                spotId: spot.id
+            }
+        });
 
-  return res.status(200).json(spots)
+        let avgRating = 0
+        reviews.forEach(review => {
+            avgRating += review.stars
+        })
+        spot.dataValues.avgRating = parseFloat((avgRating/reviews.length).toFixed(1))
+        if(isNaN(avgRating) || !avgRating){
+            spot.dataValues.avgRating = 'No Rating'
+        }
+
+        const prevImg = await SpotImage.findOne({
+            where: {
+                spotId: spot.id
+            }
+        })
+        if(!prevImg){
+            spot.dataValues.previewImage = 'No Images'
+        }
+        else{
+            spot.dataValues.previewImage = prevImg.url
+        }
+
+        const response = {
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: parseFloat(spot.lat),
+            lng: parseFloat(spot.lng),
+            name: spot.name,
+            description: spot.description,
+            price: parseFloat(spot.price),
+            createdAt: spot.createdAt.toISOString().slice(0, 19).replace('T', ' '),
+            updatedAt: spot.updatedAt.toISOString().slice(0, 19).replace('T', ' '),
+            avgRating: spot.dataValues.avgRating,
+            previewImage : spot.dataValues.previewImage
+        }
+        spotArr.push(response)
+    }
+    page = parseInt(page)
+    size = parseInt(size)
+    return res.status(200).json({Spots: spotArr, page:page, size: size})
+
 
 })
 
