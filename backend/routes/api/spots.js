@@ -50,6 +50,7 @@ const valitSpots = [
       .withMessage("Price per day must be a positive number"),
   handleValidationErrors
 ]
+
 const validateQueryFilters = [
   query('page')
   .optional()
@@ -86,8 +87,10 @@ query('maxPrice')
 handleValidationErrors
 ]
 
+
+
 //get all spots
-router.get('/', validateQueryFilters, async (req, res)=>{
+router.get('/', validateQueryFilters,async (req, res)=>{
 
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
   let queryObj = {
