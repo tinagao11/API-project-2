@@ -51,7 +51,7 @@ const valitSpots = [
   handleValidationErrors
 ]
 const validateQueryFilters = [
-query('page')
+  query('page')
   .optional()
   .isInt({ min: 1 })
   .withMessage("Page must be greater than or equal to 1"),
@@ -88,6 +88,7 @@ handleValidationErrors
 
 //get all spots
 router.get('/', validateQueryFilters, async (req, res)=>{
+
   let { page, size, minLat, maxLat, minLng, maxLng, minPrice, maxPrice } = req.query;
   let queryObj = {
     where: {}
@@ -186,7 +187,7 @@ router.get('/', validateQueryFilters, async (req, res)=>{
     }
     page = parseInt(page)
     size = parseInt(size)
-    return res.status(200).json({Spots: spotArr, page:page, size: size})
+    return res.json({Spots: spotArr, page:page, size: size})
 
 
 })
