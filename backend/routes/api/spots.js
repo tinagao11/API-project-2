@@ -503,8 +503,8 @@ router.post('/:spotId/bookings', requireAuth, async (req, res)=>{
     return res.status(404).json({message: `Spot couldn't be found`})
   }
 
-  if(userId !== spot.ownerId){
-    return res.status(403).json({message: `Spot must belong to the current user`})
+  if(userId === spot.ownerId){
+    return res.status(403).json({message: `Forbidden`})
   }
 
 
