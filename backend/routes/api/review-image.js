@@ -8,10 +8,10 @@ const { check,query } = require('express-validator');
 const router = express.Router();
 
 //Delete a Review Image
-router.delete('/:reviewImageId', requireAuth, async(req, res)=>{
-  const {reviewImageId}= req.params;
+router.delete('/:imageId', requireAuth, async(req, res)=>{
+  const { imageId}= req.params;
 
-  let reviewImage = await ReviewImage.findByPk(reviewImageId);
+  let reviewImage = await ReviewImage.findByPk(imageId);
 
   if(!reviewImage){
     return res.status(404).json({
@@ -20,6 +20,10 @@ router.delete('/:reviewImageId', requireAuth, async(req, res)=>{
   }
 
   let review = await Review.findByPk(reviewImage.reviewId)
+
+  if(!review){
+    return res.status(403).json({message:"Forbidden"})
+}
 
   if(review.userId !== req.user.id){
       return res.status(403).json({message:'image must belong to the current user'})
