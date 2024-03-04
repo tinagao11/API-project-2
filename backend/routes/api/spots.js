@@ -304,6 +304,10 @@ if (spot.lat) spot.lat = parseFloat(lat)
 if (spot.lng) spot.lng = parseFloat(lng)
 if (spot.price) spot.price = parseFloat(price)
 
+spot.dataValues.createdAt = spot.createdAt.toISOString().slice(0, 19).replace('T', ' ');
+spot.dataValues.updatedAt = spot.updatedAt.toISOString().slice(0, 19).replace('T', ' ');
+
+
 res.status(201).json(spot)
 
 })
