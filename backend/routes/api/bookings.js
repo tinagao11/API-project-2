@@ -151,7 +151,29 @@ if (Object.keys(conflictErrors).length) {
     })
 }
 
+// const existing = await Booking.findOne({
+//   where:{
+//     id: {
+//       [Op.ne]: bookingId
+//   },
+//   spotId: booking.spotId,
+//   [Op.or]: [
+//     { startDate: { [Op.between]: [start, end] } },
+//     { endDate: { [Op.between]: [start, end] } },
+//     { [Op.and]: [{ startDate: { [Op.lte]: start } }, { endDate: { [Op.gte]: end } }] }
+// ]
+//     // [Op.and]:[{startDate: {[Op.lte]: start}},{endDate: {[Op.gte]: end}}]
+//   }
+// })
 
+// if (existing) {
+//   return res.status(403).json({
+//       message: "Sorry, this spot is already booked for the specified dates",
+//       errors: {
+//           startDate: "Start date conflicts with an existing booking",
+//           endDate: "End date conflicts with an existing booking"
+//       }
+//   })}
 
   booking.startDate = startDate
   booking.endDate = endDate

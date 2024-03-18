@@ -584,6 +584,27 @@ if (Object.keys(conflictErrors).length) {
     })
 }
 
+  // const existingBooking = await Booking.findOne({
+  //     where: {
+  //         spotId: spotId,
+  //         [Op.or]: [
+  //             { startDate: { [Op.between]: [start, end] } },
+  //             { endDate: { [Op.between]: [start, end] } },
+  //             { [Op.and]: [{ startDate: { [Op.lte]: start } }, { endDate: { [Op.gte]: end } }] }
+  //         ]
+  //     }
+  // });
+
+  // if (existingBooking) {
+  //     return res.status(403).json({
+  //         message: "Sorry, this spot is already booked for the specified dates",
+  //         errors: {
+  //             startDate: "Start date conflicts with an existing booking",
+  //             endDate: "End date conflicts with an existing booking"
+  //         }
+  //     });
+  // }
+
   const newBooking = await Booking.create({
       userId: userId,
       spotId: spotId,
