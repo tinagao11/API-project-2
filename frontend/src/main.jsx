@@ -7,6 +7,7 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import { ModalProvider } from './context/Modal';
+import { BrowserRouter } from 'react-router-dom';
 
 const store = configureStore();
 
@@ -29,12 +30,13 @@ if (import.meta.env.MODE !== "production") {
 // HTML elements on top of the all the other HTML elements:
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
+
     <ModalProvider>
       <Provider store={store}>
         <App />
         {/* <Carrot /> */}
         {/* <Modal /> */}
-      </Provider>
-    </ModalProvider>
+       </Provider>
+   </ModalProvider>
   </React.StrictMode>
 );
