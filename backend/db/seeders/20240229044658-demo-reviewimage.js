@@ -20,19 +20,19 @@ module.exports = {
     await ReviewImage.bulkCreate([
       {
         reviewId:1,
-        url:'https://example.com/reviewimage1.jpg'
+        url:'https://media-cdn.tripadvisor.com/media/vr-ha-splice-j/10/d7/cf/55.jpg'
       },
       {
         reviewId:2,
-        url:'https://example.com/reviewimage2.jpg'
+        url:'https://media-cdn.tripadvisor.com/media/vr-ha-splice-j/0e/d2/1b/d7.jpg'
       },
       {
         reviewId:3,
-        url:'https://example.com/reviewimage3.jpg'
+        url:'https://media-cdn.tripadvisor.com/media/vr-ha-splice-j/0f/4b/d1/20.jpg'
       },
       {
         reviewId:4,
-        url:'https://example.com/reviewimage4.jpg'
+        url:'https://media-cdn.tripadvisor.com/media/vr-ha-splice-j/11/51/9f/75.jpg'
       }
 
     ], options, { validate: true})

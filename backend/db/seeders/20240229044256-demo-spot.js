@@ -19,7 +19,7 @@ module.exports = {
         lng: -114,
         name: 'Aspot',
         description: 'Nice place in the middle of the city.',
-        price: 100.00
+        price: 900.00
 
 
       },
@@ -33,7 +33,7 @@ module.exports = {
         lng: -144,
         name: 'Bspot',
         description: 'Explore cutting-edge technology and futuristic innovations in the heart of city',
-        price: 200.99
+        price: 700.99
       },
       {
         ownerId: 3,
