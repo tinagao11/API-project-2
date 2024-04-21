@@ -17,7 +17,7 @@ function LandingPage(){
 
   return(
     <>
-
+    <h1>homepage</h1>
     </>
   )
 
