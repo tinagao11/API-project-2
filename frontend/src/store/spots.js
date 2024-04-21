@@ -12,7 +12,6 @@ export const getAllSpots = () => async (dispatch) => {
 
     if (res.ok) {
         const spotsData = await res.json();
-        console.log('get all spots:', spotsData);
         dispatch(getSpots(spotsData));
         return spotsData
     }else{
@@ -26,10 +25,11 @@ const spotsReducer = (state = {}, action) => {
   switch (action.type) {
       case GET_SPOTS:{
         const spotsState = {};
-        action.spots.Spots.forEach((spot) => {
-            spotsState[spot.id] = spot;
-        });
-        console.log('state:', spotsState);
+        if (Array.isArray(action.spots.Spots)){
+            action.spots.Spots.forEach((spot) => {spotsState[spot.id] = spot;})
+    }else {
+        console.error(action.payload);
+    }
         return spotsState;
       }
 

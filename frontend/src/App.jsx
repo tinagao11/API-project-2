@@ -5,8 +5,8 @@ import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import './App.css'
-// import LoginFormPage from './components/LoginFormPage';
-// import SignupFormPage from './components/SignupFormPage';
+import LoginFormPage from './components/LoginFormPage';
+import SignupFormPage from './components/SignupFormPage';
 import LandingPage from './components/LandingPage/LandingPage';
 
 // import {  Routes, Route } from 'react-router-dom';
@@ -41,14 +41,14 @@ const router = createBrowserRouter([
         // element: <h1>Welcome!</h1>
         element: <LandingPage />
       },
-      // {
-      //   path: '/login',
-      //   element: <LoginFormPage />
-      // },
-      // {
-      //   path: '/signup',
-      //   element: <SignupFormPage />
-      // }
+      {
+        path: '/login',
+        element: <LoginFormPage />
+      },
+      {
+        path: '/signup',
+        element: <SignupFormPage />
+      }
     ]
   }
 ]);
