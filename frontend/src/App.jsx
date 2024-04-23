@@ -8,9 +8,8 @@ import './App.css'
 import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import LandingPage from './components/LandingPage/LandingPage';
+import SpotDetails from './components/SpotDetails/SpotDetails';
 
-// import {  Routes, Route } from 'react-router-dom';
-// import {UserContextProvider} from "./UserContext";
 
 
 function Layout() {
@@ -21,6 +20,7 @@ function Layout() {
     dispatch(sessionActions.restoreUser()).then(() => {
       setIsLoaded(true)
     });
+
   }, [dispatch]);
 
   return (
@@ -38,8 +38,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: '/',
-        // element: <h1>Welcome!</h1>
         element: <LandingPage />
+      },
+      {
+        path: '/spots/:spotId',
+        element: <SpotDetails/>
       },
       {
         path: '/login',

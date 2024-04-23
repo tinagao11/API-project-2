@@ -273,7 +273,7 @@ return spot;
 
 }
 
-router.get('/:spotId',requireAuth, async(req, res)=>{
+router.get('/:spotId',async(req, res)=>{
   const { spotId } = req.params;
   const spotDetails = await getSpotDetailById(spotId);
 
@@ -405,7 +405,7 @@ router.post('/:spotId/images', requireAuth, async(req, res)=>{
    })
 
    //Get all Reviews by a Spot's id
-router.get('/:spotId/reviews',requireAuth, async(req,res)=>{
+router.get('/:spotId/reviews',async(req,res)=>{
   const {spotId} = req.params;
 
   const spot = await Spot.findByPk(spotId);
