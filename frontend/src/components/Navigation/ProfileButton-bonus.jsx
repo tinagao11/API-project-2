@@ -63,8 +63,8 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>Hello, {user.firstName} {user.lastName}</li>
-            <li>{user.email}</li>
+            <div color='black'>Hello, {user.firstName} {user.lastName}</div>
+            <div color='black'>{user.email}</div>
             <hr/>
               {currUser && (
                 <div className='ManageSpots-container'>

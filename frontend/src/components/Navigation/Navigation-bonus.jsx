@@ -5,7 +5,7 @@ import './Navigation-bonus.css';
 import { GiTreehouse } from "react-icons/gi";
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector(state => state.session.user);
+  const currUser = useSelector(state => state.session.user);
 
   return (
     <div className='head-container'>
@@ -14,15 +14,15 @@ function Navigation({ isLoaded }) {
         </NavLink>
         <h1 className='title'>airbnb</h1>
 
-        {sessionUser && (
-          <NavLink to='/spots/new' className='CreateSpotLink'>
-            <span>Host</span>
-            <span>Your</span>
-            <span>Spot</span>
+        {currUser && (
+          <div className='create-spot-container'>
+          <NavLink to='/spots/new' className='create-spot-link' >
+            <span>Add New Spot</span>
           </NavLink>
+          </div>
         )}
           {isLoaded && (
-            <ProfileButton user={sessionUser} />
+            <ProfileButton user={currUser} />
           )}
     </div>
   );

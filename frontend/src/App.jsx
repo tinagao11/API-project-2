@@ -9,6 +9,7 @@ import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import LandingPage from './components/LandingPage/LandingPage';
 import SpotDetails from './components/SpotDetails/SpotDetails';
+import CreateSpot from './components/CreateSpot/CreateSpot'
 
 
 
@@ -42,7 +43,11 @@ const router = createBrowserRouter([
       },
       {
         path: '/spots/:spotId',
-        element: <SpotDetails/>
+        element: <SpotDetails />
+      },
+      {
+        path: '/spots/new',
+        element: <CreateSpot />
       },
       {
         path: '/login',

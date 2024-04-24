@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllSpots } from '../../store/spots'
 import { NavLink } from "react-router-dom";
-
+import './LandingPage.css'
 
 function LandingPage(){
 

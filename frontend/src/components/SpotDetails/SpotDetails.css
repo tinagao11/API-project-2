@@ -12,3 +12,15 @@
   height: 100%;
 }
 
+.other-images {
+  display: grid;
+  gap: 5px;
+  padding: 5px;
+  grid-template-columns: 1fr 1fr
+}
+
+.main-image-other {
+  width: 310px;
+  height: 257px;
+
+}
