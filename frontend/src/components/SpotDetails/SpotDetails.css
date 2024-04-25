@@ -16,10 +16,10 @@
   display: grid;
   gap: 5px;
   padding: 5px;
-  grid-template-columns: 1fr 1fr
+  grid-template-columns: 1fr 1fr;
 }
 
-.main-image-other {
+.detail-images {
   width: 310px;
   height: 257px;
 

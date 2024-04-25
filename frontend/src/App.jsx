@@ -9,7 +9,9 @@ import LoginFormPage from './components/LoginFormPage';
 import SignupFormPage from './components/SignupFormPage';
 import LandingPage from './components/LandingPage/LandingPage';
 import SpotDetails from './components/SpotDetails/SpotDetails';
-import CreateSpot from './components/CreateSpot/CreateSpot'
+import CreateSpot from './components/CreateSpot/CreateSpot';
+import UpdateSpot from './components/UpdateSpot/UpdateSpot';
+import ManageSpot from './components/ManageSpot';
 
 
 
@@ -46,8 +48,16 @@ const router = createBrowserRouter([
         element: <SpotDetails />
       },
       {
+        path: '/spots/current',
+        element: <ManageSpot />
+      },
+      {
         path: '/spots/new',
         element: <CreateSpot />
+      },
+      {
+        path: '/spots/:spotId/edit',
+        element: <UpdateSpot />
       },
       {
         path: '/login',

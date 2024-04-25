@@ -1,10 +1,8 @@
 import { useEffect} from "react";
-// import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom"
 import { getOneSpot } from "../../store/spots";
 import './SpotDetails.css'
-
 import { getReviewsThunk } from "../../store/reviews";
 // import OpenModalButton from '../OpenModalButton'
 
@@ -12,7 +10,7 @@ const SpotDetails=()=>{
   const {spotId}=useParams();
   const spots = useSelector(state=>state.spotsState)
   let currSpot = spots[spotId]
-  console.log('====>current spot',currSpot)
+  // console.log('====>current spot',currSpot)
   // console.log('==>spot img', currSpot.SpotImages)
   // console.log('==>spot img', currSpot.SpotImages[0])
 
@@ -43,14 +41,6 @@ const SpotDetails=()=>{
 
   },[dispatch,spotId,reviewArray.length])
 
-  // const [isLoaded, setIsLoaded] = useState(false);
-
-  // useEffect(() => {
-  //   dispatch(getOneSpot(spotId)).then(() => {
-  //     setIsLoaded(true)
-  //   });
-  // }, [dispatch, spotId]);
-
   if (!currSpot || !currSpot.Owner) {
     return (<div>Loading...</div>);
   }
@@ -71,9 +61,9 @@ const SpotDetails=()=>{
           <h3 className="location">{currSpot.city}, {currSpot.state}, {currSpot.country}</h3>
         </div>
         <div className="image-container">
-            <img className="main-image" src={currSpot.SpotImages[0]?.url} alt="Spot View" />
+            <img className="main-image" src={currSpot.SpotImages[0]?.url} alt="MainView" />
             <div className="other-images">
-   {currSpot.SpotImages.slice(1).map((image) => (<img key={image.id}  src={image.url} alt='Spot' />))}
+   {currSpot.SpotImages.slice(1).map((image) => (<img key={image.id} className="detail-images"  src={image.url} alt='Spot' />))}
             </div>
         </div>
 
@@ -115,7 +105,6 @@ const SpotDetails=()=>{
       {/* <SpotFeedbacks spotId={currSpot.id} /> */}
     </div>
   </div>
-
       </div>
     ) : (
       <div>Loading...</div>

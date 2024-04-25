@@ -35,18 +35,18 @@ const CreateSpot= ({ existingSpot }) => {
         if (!spotDetails.city.trim()) newValidations.city = 'City is required';
         if (!spotDetails.state.trim()) newValidations.state = 'State is required';
         if (!spotDetails.name.trim()) newValidations.name = 'Name is required';
-        if (!spotDetails.price) newValidations.price = 'Price per night is required';
+        if (!spotDetails.price) newValidations.price = 'Price is required';
         else if (Number(spotDetails.price) < 0) newValidations.price = 'Price must be a positive value';
 
 
-        if (spotDetails.description.length < 30) newValidations.description = 'Description needs at least 30 characters';
+        if (spotDetails.description.length < 30) newValidations.description = 'Description needs a minimum of 30 characters';
 
 
         const lat = parseFloat(spotDetails.lat);
-        if (isNaN(lat) || lat < -90 || lat > 90) newValidations.lat = 'Latitude must be between -90 and 90';
+        if (isNaN(lat) || lat < -90 || lat > 90) newValidations.lat = 'Latitude is required and between -90 and 90';
 
         const lng = parseFloat(spotDetails.lng);
-        if (isNaN(lng) || lng < -180 || lng > 180) newValidations.lng = 'Longitude must be between -180 and 180';
+        if (isNaN(lng) || lng < -180 || lng > 180) newValidations.lng = 'Longitude is required and between -180 and 180';
 
 
         spotDetails.imgUrls.forEach((url, index) => {
@@ -57,7 +57,7 @@ const CreateSpot= ({ existingSpot }) => {
 
 
         if (spotDetails.imgUrls.every(url => !url.trim())) {
-          newValidations.img0 = 'At least one image is required and must end with .png, .jpg, or .jpeg.';
+          newValidations.img0 = 'Preview image is required';
         }
 
         setValidations(newValidations);
@@ -106,8 +106,8 @@ const CreateSpot= ({ existingSpot }) => {
       };
 
       return (
-        <div className='Form-container'>
-          <form className='Form' onSubmit={handleSubmit}>
+        <div className='form-container'>
+          <form className='form' onSubmit={handleSubmit}>
           <h1 className='Title'>Create a New Spot</h1>
             <h2>Where&apos;s your place located?</h2>
             <p>Guests will only get your exact address once they booked a reservation.</p>
@@ -154,7 +154,7 @@ const CreateSpot= ({ existingSpot }) => {
                 name="state"
                 value={spotDetails.state}
                 onChange={(e) => handleInputChange(e)}
-                placeholder="STATE"
+                placeholder="State"
               />
               {submitted && validations.state && <p className="error">{validations.state}</p>}
             </div>
@@ -190,7 +190,7 @@ const CreateSpot= ({ existingSpot }) => {
                 name="description"
                 value={spotDetails.description}
                 onChange={(e) => handleInputChange(e)}
-                placeholder="Please write at least 30 characters"
+                placeholder="description your spot at least 30 characters"
               />
               {submitted && validations.description && <p className="error">{validations.description}</p>}
             </div>
@@ -209,6 +209,7 @@ const CreateSpot= ({ existingSpot }) => {
               {submitted && validations.name && <p className="error">{validations.name}</p>}
             </div>
 
+            <hr></hr>
             <div className="field">
               <h2>Set a base price for your spot</h2>
               <p>Competitive pricing can help your listing stand out and rank higher in search results.</p>
