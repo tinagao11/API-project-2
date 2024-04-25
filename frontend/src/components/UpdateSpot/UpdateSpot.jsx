@@ -32,13 +32,13 @@ const UpdateSpot=()=>{
       dispatch(getOneSpot(spotId))
     }
 
-    if(!name){val.name='Name is required'}
-    if(!country){val.country='Country is required'}
-    if(!address){val.address='Address is required'}
-    if(!city){val.city='City is required'}
-    if(!state){val.state='State is required'}
-    if(description && description.length<30){val.description='Description needs a minimum of 30 characters'}
-    if(!price){val.price='Price is required'}
+    if(!name) val.name='Name is required';
+    if(!country) val.country='Country is required';
+    if(!address) val.address='Address is required';
+    if(!city) val.city='City is required';
+    if(!state) val.state='State is required';
+    if(description && description.length<30) val.description='Description needs a minimum of 30 characters';
+    if(!price) val.price='Price is required';
 
     setValidations(val)
 
