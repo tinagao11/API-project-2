@@ -39,7 +39,7 @@ const CreateSpot= ({ existingSpot }) => {
         else if (Number(spotDetails.price) < 0) newValidations.price = 'Price must be a positive value';
 
 
-        if (spotDetails.description.length < 30) newValidations.description = 'Description needs a minimum of 30 characters';
+        if (spotDetails.description.length < 30) newValidations.description = 'Description needs 30 or more characters';
 
 
         const lat = parseFloat(spotDetails.lat);
@@ -77,6 +77,7 @@ const CreateSpot= ({ existingSpot }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+     
         setSubmitted(true);
 
         if (Object.keys(validations).length === 0) {
@@ -124,7 +125,7 @@ const CreateSpot= ({ existingSpot }) => {
             </div>
 
             <div className="field">
-              <label>Address</label>
+              <label>Street Address</label>
               <input
                 type="text"
                 name="address"
@@ -190,7 +191,7 @@ const CreateSpot= ({ existingSpot }) => {
                 name="description"
                 value={spotDetails.description}
                 onChange={(e) => handleInputChange(e)}
-                placeholder="description your spot at least 30 characters"
+                placeholder="Please write at least 30 characters"
               />
               {submitted && validations.description && <p className="error">{validations.description}</p>}
             </div>

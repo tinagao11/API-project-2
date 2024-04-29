@@ -11,6 +11,8 @@ function LoginFormModal() {
   const [errors, setErrors] = useState({});
   const { closeModal } = useModal();
 
+  const isFormValid = credential.length >= 4 && password.length >= 6;
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
@@ -24,33 +26,92 @@ function LoginFormModal() {
       });
   };
 
+  const handleDemoLogin = (e) => {
+    e.preventDefault();
+    attemptLogin({
+      credential: 'demo@user.io',
+      password: 'password'
+    });
+  };
+
+  const attemptLogin = ({ credential, password }) => {
+    setErrors({});
+    dispatch(sessionActions.login({ credential, password }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data?.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
+
   return (
-    <>
-      <h1>Log In</h1>
-      <form onSubmit={handleSubmit}>
-        <label>
-          Username or Email
-          <input
-            type="text"
-            value={credential}
-            onChange={(e) => setCredential(e.target.value)}
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-          />
-        </label>
-        {errors.credential && <p>{errors.credential}</p>}
-        <button type="submit">Log In</button>
+    <div className="login-form-modal-container">
+      <h1 className="login-form-modal-title">Log In</h1>
+      <form className="login-form" onSubmit={handleSubmit}>
+        <div className="login-form-row">
+          <div className="login-form-group">
+            <label className="login-form-label">
+              Username or Email
+              <input
+                className='login-form-input'
+                type="text"
+                value={credential}
+                onChange={(e) => setCredential(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+          <div className="login-form-group">
+            <label className="login-form-label">
+              Password
+              <input
+                className='login-form-input'
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </label>
+          </div>
+        </div>
+        {errors.credential && <p className="login-form-error">{errors.credential}</p>}
+        <div className="login-form-actions">
+          <button type="submit" className="login-form-btn" disabled={!isFormValid}>Log In</button>
+          <button type="button" className="login-form-btn demo" onClick={handleDemoLogin}>Log In as Demo User</button>
+        </div>
       </form>
-    </>
+    </div>
   );
+
+  // return (
+  //   <>
+  //     <h1>Log In</h1>
+  //     <form onSubmit={handleSubmit}>
+  //       <label>
+  //         Username or Email
+  //         <input
+  //           type="text"
+  //           value={credential}
+  //           onChange={(e) => setCredential(e.target.value)}
+  //           required
+  //         />
+  //       </label>
+  //       <label>
+  //         Password
+  //         <input
+  //           type="password"
+  //           value={password}
+  //           onChange={(e) => setPassword(e.target.value)}
+  //           required
+  //         />
+  //       </label>
+  //       {errors.credential && <p>{errors.credential}</p>}
+  //       <button type="submit">Log In</button>
+  //     </form>
+  //   </>
+  // );
 }
 
 export default LoginFormModal;

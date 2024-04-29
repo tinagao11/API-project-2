@@ -5,15 +5,13 @@ import Navigation from './components/Navigation/Navigation-bonus';
 import * as sessionActions from './store/session';
 import { Modal } from './context/Modal';
 import './App.css'
-import LoginFormPage from './components/LoginFormPage';
-import SignupFormPage from './components/SignupFormPage';
+// import LoginFormPage from './components/LoginFormPage';
+// import SignupFormPage from './components/SignupFormPage';
 import LandingPage from './components/LandingPage/LandingPage';
 import SpotDetails from './components/SpotDetails/SpotDetails';
 import CreateSpot from './components/CreateSpot/CreateSpot';
 import UpdateSpot from './components/UpdateSpot/UpdateSpot';
 import ManageSpot from './components/ManageSpot';
-
-
 
 function Layout() {
   const dispatch = useDispatch();
@@ -59,13 +57,17 @@ const router = createBrowserRouter([
         path: '/spots/:spotId/edit',
         element: <UpdateSpot />
       },
+      // {
+      //   path: '/login',
+      //   element: <LoginFormPage />
+      // },
+      // {
+      //   path: '/signup',
+      //   element: <SignupFormPage />
+      // },
       {
-        path: '/login',
-        element: <LoginFormPage />
-      },
-      {
-        path: '/signup',
-        element: <SignupFormPage />
+        path: '*',
+        element: <h1>Page Not Found</h1>
       }
     ]
   }

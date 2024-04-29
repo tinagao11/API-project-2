@@ -7,6 +7,10 @@
 
 }
 
+.nav{
+  text-decoration: none;
+}
+
 .spot {
   display: flex;
   flex-direction: column;
@@ -19,6 +23,49 @@
 
 .spot img {
   width: 100%;
-  height: auto;
+  height: 220px;
   object-fit: cover;
+}
+
+.Review-location-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+
+.spot .spot-text {
+  padding: 0.5rem;
+  text-align: center;
+}
+
+.spot .location,
+.spot .price {
+  margin: 0.5rem 0;
+}
+
+
+@media (min-width: 1024px) {
+  .spots {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+
+
+
+@media (max-width: 767px) {
+  .spots {
+    grid-template-columns: repeat(1, 1fr);
+
+
+  }
+}
+
+
+@media (max-width: 480px) {
+  .spots {
+    grid-template-columns: 1fr;
+  }
 }

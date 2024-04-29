@@ -9,21 +9,27 @@ function Navigation({ isLoaded }) {
 
   return (
     <div className='head-container'>
+      <div className='logo-title'>
         <NavLink className='logo' to="/">
         <GiTreehouse size={60} color='FF385C' />
         </NavLink>
         <h1 className='title'>airbnb</h1>
+        </div>
 
+        <nav className='create-profile'>
         {currUser && (
-          <div className='create-spot-container'>
-          <NavLink to='/spots/new' className='create-spot-link' >
-            <span>Add New Spot</span>
+          // <div className='create-spot-container'>
+          <NavLink to='/spots/new' className='create-spot' >
+            <span>Create a New Spot</span>
           </NavLink>
-          </div>
+          // </div>
         )}
+        <div className='profile'>
           {isLoaded && (
             <ProfileButton user={currUser} />
           )}
+          </div>
+        </nav>
     </div>
   );
 }

@@ -1,3 +1,4 @@
 import SpotDetails from "./SpotDetails";
 
-export default SpotDetails;
+
+export default SpotDetails

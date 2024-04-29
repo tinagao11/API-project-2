@@ -1,3 +1,5 @@
+.nav{text-decoration: none}
+
 .spots-container {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -17,18 +19,67 @@
 
 .each-spot img {
   width: 100%;
-  height: auto;
+  height: 220px;
   object-fit: cover;
+}
+
+.each-spot .location,
+.each-spot .price {
+  margin: 0.5rem 0;
 }
 
 
 .create-btn {
-  padding: 10px 10px;
-  background-color: #bfc7d0c9;
+  background-color: #b1adada1;
+  color:#FF385C;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  padding: 20px;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin-top: 20px;
+  width: 300px;
+}
+
+.create-link{
+  text-decoration: none;
+  color:#FF385C;
+}
+
+.rating-location{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 0.5rem;
+}
+
+
+.update-delete-btn {
+  padding: 10px;
+  background-color: #f8f9fa;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.update-btn {
+  background-color: #FF385C;
   color: white;
+  text-decoration: none;
+  padding: 5px 10px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
+}
+
+.delete-btn {
   text-decoration: none;
-  display: inline-block;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
 }

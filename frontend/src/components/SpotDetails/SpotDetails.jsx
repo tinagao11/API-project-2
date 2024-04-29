@@ -4,7 +4,9 @@ import { useParams } from "react-router-dom"
 import { getOneSpot } from "../../store/spots";
 import './SpotDetails.css'
 import { getReviewsThunk } from "../../store/reviews";
-// import OpenModalButton from '../OpenModalButton'
+import OpenModalButton from '../OpenModalButton'
+import ReviewForm from "../ReviewForm/ReviewForm";
+import SpotReview from "./SpotReview";
 
 const SpotDetails=()=>{
   const {spotId}=useParams();
@@ -12,20 +14,20 @@ const SpotDetails=()=>{
   let currSpot = spots[spotId]
   // console.log('====>current spot',currSpot)
   // console.log('==>spot img', currSpot.SpotImages)
-  // console.log('==>spot img', currSpot.SpotImages[0])
 
-  // const currUser = useSelector((state) => state.session.user)
+  const currUser = useSelector((state) => state.session.user)
 
 
-//   function isOwner(spotOwner) {
-//     if (currUser && spotOwner) {
-//       return currUser.id == spotOwner.id
-//     }
-//     else
-//     {
-//       return null
-//     }
-// }
+  function isOwner(spotOwner) {
+    if (currUser && spotOwner) {
+      return currUser.id == spotOwner.id
+    }
+    else
+    {
+      return null
+    }
+}
+
 
   const reviews = useSelector(state => state.reviewState)
   const reviewArray = Object.values(reviews)
@@ -35,7 +37,6 @@ const SpotDetails=()=>{
   const dispatch = useDispatch()
 
     useEffect(()=>{
-    // console.log('in useEffect calling getOneSpot')
     dispatch(getOneSpot(spotId))
     dispatch(getReviewsThunk(spotId))
 
@@ -45,6 +46,9 @@ const SpotDetails=()=>{
     return (<div>Loading...</div>);
   }
 
+
+  const hasReview = reviewArray.some(review =>
+    review.userId === currUser?.id);
 
   const reserveBtn = (e) => {
     e.preventDefault();
@@ -70,13 +74,13 @@ const SpotDetails=()=>{
   <div className='details-container'>
     <div className='info-section'>
       { <div className='host'>
-        <p>Managed by {currSpot.Owner.firstName} {currSpot.Owner.lastName}</p>
+        <p>Hosted by {currSpot.Owner.firstName} {currSpot.Owner.lastName}</p>
         <p className='description'>{currSpot.description}</p>
       </div> }
       <div className='reservation'>
         <div className='pricing-and-rating'>
-          <span className='price'>${currSpot.price}/night</span>
-          <div className='rating'>
+          <span className='price-detail'>${currSpot.price}/night</span>
+          <div className='rating-detail'>
             <p>★ {currSpot.avgStarRating > 0 ? currSpot.avgStarRating.toFixed(1) : 'New'}&nbsp;
         {currSpot.numReviews > 0 ? ` · ${currSpot.numReviews} ${currSpot.numReviews === 1 ? 'Review' : 'Reviews'}` : ''}</p>
           </div>
@@ -88,21 +92,20 @@ const SpotDetails=()=>{
 
   <div className='reviews-container'>
     <div className='review-head'>
-      {/* <h2>Reviews</h2> */}
       <p>★ {currSpot.avgStarRating > 0 ? currSpot.avgStarRating.toFixed(1) : 'New'}&nbsp;
-        {/* · {currentSpot.numReviews} {currentSpot.numReviews === 1 ? 'Review' : 'Reviews'}</p> */}
         {currSpot.numReviews > 0 ? ` · ${currSpot.numReviews} ${currSpot.numReviews === 1 ? 'Review' : 'Reviews'}` : ''}</p>
-        {/* {currUser && !isOwner(currSpot.Owner) && !hasReview &&
+        {currUser && !isOwner(currSpot.Owner) && !hasReview &&
       <div className='Post-review'>
         <OpenModalButton
           className='reserve-btn'
           buttonText='Post Your Review'
           modalComponent={<ReviewForm spotId={currSpot.id} />} />
       </div>
-    } */}
+    }
     </div>
     <div className='reviews-list'>
-      {/* <SpotFeedbacks spotId={currSpot.id} /> */}
+      <SpotReview spotId={currSpot.id} />
+
     </div>
   </div>
       </div>

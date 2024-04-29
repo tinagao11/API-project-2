@@ -28,7 +28,7 @@ function LandingPage(){
             <div className="location">{spot.city}, {spot.state}</div>
             <div className="review">★ {spot.avgRating > 0 ? spot.avgRating.toFixed(1) : 'New'}</div>
              </div>
-            <div className="price">${spot.price} per night</div>
+            <div className="price"> ${spot.price}/night</div>
           </div>
         </NavLink>
       ))
